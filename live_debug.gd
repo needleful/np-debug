@@ -173,13 +173,14 @@ func _physics_process(_delta:float):
 
 func show_info(obj: Node, window_pos: Vector2):
 	var box := get_box()
-	add_child(box.panel)
+	if !box.panel.get_parent():
+		add_child(box.panel)
 	if !obj:
 		var _y = box.add_label('No Content')
 		return
 	box.add_label(obj.get_path())
 	if obj.has_method('_show_debug'):
-		obj._show_debug(box)
+		_show_info_recurse(obj, box)
 	else:
 		var p := obj.get_parent()
 		while(p):
@@ -188,12 +189,20 @@ func show_info(obj: Node, window_pos: Vector2):
 			else:
 				p = p.get_parent()
 		if p:
-			p._show_debug(box)
+			_show_info_recurse(p, box)
 		else:
-			box.add_label("Top-level node")
+			_show_info_recurse(obj, box)
 	box.panel.show()
 	box.panel.set_global_position(window_pos)
 	return box
+
+func _show_info_recurse(obj: Node, box: Box):
+	print_debug('%s has %d children' % [obj.name, obj.get_child_count()])
+	if obj.has_method('_show_debug'):
+		obj._show_debug(box)
+	for c in obj.get_children():
+		if c.has_method('_show_debug'):
+			_show_info_recurse(c, box)
 
 func get_box() -> Box:
 	var panel = dry('PanelContainer')
