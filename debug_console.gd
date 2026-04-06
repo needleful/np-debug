@@ -12,6 +12,7 @@ var dict: Dictionary
 # Meant to be overridden to add parse-time variables
 var variables: Dictionary
 var old_mouse_mode := Input.mouse_mode
+var this:Node = null
 
 func _init():
 	history = []

@@ -70,7 +70,7 @@ class Box:
 		for s in b.get_signal_list():
 			for c in b.get_signal_connection_list(s.name):
 				c.signal.disconnect(c.callable)
-		b.connect("pressed", Callable(object, method).bindv(binds), flags)
+		b.pressed.connect(Callable(object, method).bindv(binds), flags)
 		box.add_child(b)
 		return b
 	
@@ -164,7 +164,7 @@ func _get_object(uv: Vector2) -> Node:
 
 func _physics_process(_delta:float):
 	var obj := _get_object(col_request)
-	console.variables['this'] = obj
+	console.this = obj
 	if obj:
 		if debug_box:
 			debug_box.clear()
