@@ -155,7 +155,7 @@ func _get_object(uv: Vector2) -> Node:
 	var q := PhysicsRayQueryParameters3D.new()
 	q.from = cam.project_ray_origin(uv)
 	q.to = q.from + cam.project_ray_normal(uv)*10000
-	q.collide_with_areas = true
+	q.collide_with_areas = false
 	var col := phys.intersect_ray(q)
 	if col:
 		return col.collider
