@@ -200,9 +200,16 @@ func _show_info_recurse(obj: Node, box: Box):
 	print_debug('%s has %d children' % [obj.name, obj.get_child_count()])
 	if obj.has_method('_show_debug'):
 		obj._show_debug(box)
+	else:
+		_show_standard_properties(box, obj)
 	for c in obj.get_children():
 		if c.has_method('_show_debug'):
 			_show_info_recurse(c, box)
+
+func _show_standard_properties(box: Box, obj: Node):
+	for p in obj.get_property_list():
+		if p.usage & PROPERTY_USAGE_EDITOR:
+			box.property(obj, p.name)
 
 func get_box() -> Box:
 	var panel = dry('PanelContainer')
