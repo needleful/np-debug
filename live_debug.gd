@@ -166,10 +166,13 @@ func _physics_process(_delta:float):
 	var obj := _get_object(col_request)
 	console.this = obj
 	if obj:
-		if debug_box:
-			debug_box.clear()
-		debug_box = show_info(obj, col_request)
+		debug(obj)
 	set_physics_process(false)
+
+func debug(obj):
+	if debug_box:
+		debug_box.clear()
+	debug_box = show_info(obj, col_request)
 
 func show_info(obj: Node, window_pos: Vector2):
 	var box := get_box()
