@@ -1,0 +1,247 @@
+[gd_scene load_steps=11 format=3 uid="uid://brxu2e15n6ojx"]
+
+[ext_resource type="Script" uid="uid://dlsbqwotd5t4y" path="res://addons/np-debug/editor_console/editor_console.gd" id="1_4j2au"]
+[ext_resource type="Script" uid="uid://bt0a1kr1eudsm" path="res://areas/visit_area.gd" id="2_k7ql7"]
+[ext_resource type="Script" uid="uid://m8j3obspieal" path="res://entities/control/sensor.gd" id="3_yctta"]
+[ext_resource type="Script" uid="uid://cx23oldd3hqio" path="res://entities/control/door.gd" id="4_c60fr"]
+
+[sub_resource type="GDScriptSyntaxHighlighter" id="GDScriptSyntaxHighlighter_t7no8"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_saw40"]
+height = 29.375778
+radius = 33.34668
+
+[sub_resource type="Animation" id="Animation_fknwk"]
+resource_name = "Activate"
+length = 3.0
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.5, 3),
+"transitions": PackedFloat32Array(2.0000005, 0.49999988, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 3.858285, 0), Vector3(0, 7.71657, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_ns5nd"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yjyul"]
+_data = {
+&"Activate": SubResource("Animation_fknwk"),
+&"RESET": SubResource("Animation_ns5nd")
+}
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_t5ot7"]
+size = Vector3(12.67749, 6.986328, 13)
+
+[node name="EditorConsole" type="Control" node_paths=PackedStringArray("text", "run_button", "run_selected_button", "message_box", "clear_button", "scroll", "status")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_4j2au")
+text = NodePath("box/VSplitContainer/CodeEdit")
+run_button = NodePath("box/buttons/run")
+run_selected_button = NodePath("box/buttons/run_selected")
+message_box = NodePath("box/VSplitContainer/PanelContainer/ScrollContainer/messages")
+clear_button = NodePath("box/buttons/clear")
+scroll = NodePath("box/VSplitContainer/PanelContainer/ScrollContainer")
+status = NodePath("box/buttons/status")
+
+[node name="box" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VSplitContainer" type="VSplitContainer" parent="box"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="CodeEdit" type="CodeEdit" parent="box/VSplitContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+deselect_on_focus_loss_enabled = false
+syntax_highlighter = SubResource("GDScriptSyntaxHighlighter_t7no8")
+symbol_tooltip_on_hover = true
+line_folding = true
+gutters_draw_executing_lines = true
+gutters_draw_line_numbers = true
+
+[node name="PanelContainer" type="PanelContainer" parent="box/VSplitContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.5
+
+[node name="ScrollContainer" type="ScrollContainer" parent="box/VSplitContainer/PanelContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.5
+follow_focus = true
+
+[node name="messages" type="VBoxContainer" parent="box/VSplitContainer/PanelContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 1
+
+[node name="upper_area" type="Area3D" parent="box/VSplitContainer/PanelContainer/ScrollContainer"]
+collision_layer = 131136
+collision_mask = 131074
+priority = 4
+script = ExtResource("2_k7ql7")
+place_id = "opulent_medium:upper_ossuary"
+
+[node name="custom_shape" type="CollisionShape3D" parent="box/VSplitContainer/PanelContainer/ScrollContainer/upper_area"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -13.354052, 0)
+shape = SubResource("CylinderShape3D_saw40")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="box/VSplitContainer/PanelContainer/ScrollContainer" groups=["opulent_medium_lights"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -32.740337, 0)
+light_color = Color(0.48868406, 0.3545761, 0.63478494, 1)
+omni_range = 143.761
+omni_attenuation = 0.363
+
+[node name="CSGBox3D" type="CSGBox3D" parent="box/VSplitContainer/PanelContainer/ScrollContainer"]
+transform = Transform3D(0.9410783, 0, -0.33819658, 0, 1, 0, 0.33819658, 0, 0.9410783, 10.310493, -94.31434, -25.524153)
+layers = 257
+use_collision = true
+collision_layer = 257
+size = Vector3(16.34375, 1, 12.790665)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="box/VSplitContainer/PanelContainer/ScrollContainer"]
+transform = Transform3D(0.566924, 0, 0.82377005, 0, 1, 0, -0.82377005, 0, 0.566924, -20.257149, -72.00989, -19.363476)
+layers = 257
+use_collision = true
+collision_layer = 257
+size = Vector3(16.34375, 1, 4.97583)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="box/VSplitContainer/PanelContainer/ScrollContainer"]
+transform = Transform3D(0.5100927, 0, 0.8601194, 0, 1, 0, -0.8601194, 0, 0.5100927, -24.261395, -46.610004, -16.448702)
+layers = 257
+use_collision = true
+collision_layer = 257
+size = Vector3(16.34375, 1, 4.97583)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="box/VSplitContainer/PanelContainer/ScrollContainer"]
+transform = Transform3D(0.16181058, 0, 0.98682183, 0, 1, 0, -0.98682183, 0, 0.16181058, -30.056686, -37.825726, -3.7558274)
+layers = 257
+use_collision = true
+collision_layer = 257
+size = Vector3(16.34375, 1, 4.97583)
+
+[node name="sensor_time_gun" type="Area3D" parent="box/VSplitContainer/PanelContainer/ScrollContainer"]
+transform = Transform3D(-0.9879818, 0, -0.15457077, 0, 1, 0, 0.15457077, 0, -0.9879818, -5.140915, -24.569046, -32.881935)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("3_yctta")
+key_item = "neutrino_tablet"
+metadata/_custom_type_script = "uid://m8j3obspieal"
+
+[node name="Door" type="AnimationPlayer" parent="box/VSplitContainer/PanelContainer/ScrollContainer/sensor_time_gun"]
+root_node = NodePath("../../ossuary/door_holder_thing/door_time_gun_001")
+libraries = {
+&"": SubResource("AnimationLibrary_yjyul")
+}
+script = ExtResource("4_c60fr")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="box/VSplitContainer/PanelContainer/ScrollContainer/sensor_time_gun"]
+shape = SubResource("BoxShape3D_t5ot7")
+
+[node name="audio" type="AudioStreamPlayer3D" parent="box/VSplitContainer/PanelContainer/ScrollContainer/sensor_time_gun"]
+volume_db = -8.153
+pitch_scale = 0.77
+bus = &"SFX"
+
+[node name="sensor_medium" type="Area3D" parent="box/VSplitContainer/PanelContainer/ScrollContainer"]
+transform = Transform3D(-0.9879817, 0, -0.15457076, 0, 1, 0, 0.15457076, 0, -0.9879817, 32.838562, -25.222078, -5.1376266)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("3_yctta")
+key_item = "triangles_tablet"
+metadata/_custom_type_script = "uid://m8j3obspieal"
+
+[node name="Door" type="AnimationPlayer" parent="box/VSplitContainer/PanelContainer/ScrollContainer/sensor_medium"]
+root_node = NodePath("../../../landing/medium_room_002/door_holder_medium/door_medium")
+libraries = {
+&"": SubResource("AnimationLibrary_yjyul")
+}
+script = ExtResource("4_c60fr")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="box/VSplitContainer/PanelContainer/ScrollContainer/sensor_medium"]
+shape = SubResource("BoxShape3D_t5ot7")
+
+[node name="audio" type="AudioStreamPlayer3D" parent="box/VSplitContainer/PanelContainer/ScrollContainer/sensor_medium"]
+volume_db = -8.153
+pitch_scale = 0.77
+bus = &"SFX"
+
+[node name="sensor_backtrack" type="Area3D" parent="box/VSplitContainer/PanelContainer/ScrollContainer"]
+transform = Transform3D(-0.9879818, 0, -0.15457077, 0, 1, 0, 0.15457077, 0, -0.9879818, 4.6761475, -24.569046, 32.772625)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("3_yctta")
+key_item = "neutrino_tablet"
+metadata/_custom_type_script = "uid://m8j3obspieal"
+
+[node name="Door" type="AnimationPlayer" parent="box/VSplitContainer/PanelContainer/ScrollContainer/sensor_backtrack"]
+root_node = NodePath("../../ossuary/door_holder_thing_001/door_loopback")
+libraries = {
+&"": SubResource("AnimationLibrary_yjyul")
+}
+script = ExtResource("4_c60fr")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="box/VSplitContainer/PanelContainer/ScrollContainer/sensor_backtrack"]
+shape = SubResource("BoxShape3D_t5ot7")
+
+[node name="audio" type="AudioStreamPlayer3D" parent="box/VSplitContainer/PanelContainer/ScrollContainer/sensor_backtrack"]
+volume_db = -8.153
+pitch_scale = 0.77
+bus = &"SFX"
+
+[node name="buttons" type="VBoxContainer" parent="box"]
+layout_mode = 2
+
+[node name="run" type="Button" parent="box/buttons"]
+layout_mode = 2
+tooltip_text = "Evaluates the entire text like a single function, returning the last result."
+text = "Run Script"
+
+[node name="run_selected" type="Button" parent="box/buttons"]
+layout_mode = 2
+text = "Run Selected"
+
+[node name="clear" type="Button" parent="box/buttons"]
+layout_mode = 2
+text = "Clear Messages"
+
+[node name="spacer" type="Control" parent="box/buttons"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="status" type="Label" parent="box/buttons"]
+layout_mode = 2
+text = "Idle"
