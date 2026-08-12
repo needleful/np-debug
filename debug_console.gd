@@ -4,6 +4,7 @@ extends Control
 @onready var line_edit := $VBoxContainer/LineEdit
 @onready var logs := $VBoxContainer/ScrollContainer/logs
 @onready var scroll := $VBoxContainer/ScrollContainer
+@onready var debug := LiveDebug
 
 var history: Array
 var index := 0
