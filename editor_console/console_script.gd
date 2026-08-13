@@ -2,6 +2,18 @@
 class_name NPConsoleScript
 extends EditorScript
 
+func selected_nodes() -> Array[Node]:
+	return get_editor_interface().get_selection().get_selected_nodes()
+
+func reparent_selected() -> bool:
+	var s := selected_nodes()
+	if s.is_empty():
+		return false
+	var last := selected_nodes().pop_back()
+	for node in s:
+		node.reparent(last)
+	return true
+
 func node(path: String) -> Node:
 	return get_scene().get_node(path)
 
