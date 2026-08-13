@@ -5,7 +5,7 @@ extends EditorScript
 func selected_nodes() -> Array[Node]:
 	return get_editor_interface().get_selection().get_selected_nodes()
 
-func reparent_selected() -> bool:
+func reparent() -> bool:
 	var s := selected_nodes()
 	if s.is_empty():
 		return false
