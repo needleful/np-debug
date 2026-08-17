@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://brxu2e15n6ojx"]
+[gd_scene load_steps=3 format=3 uid="uid://h4bmujyckk58"]
 
 [ext_resource type="Script" uid="uid://dlsbqwotd5t4y" path="res://addons/np-debug/editor_console/editor_console.gd" id="1_4j2au"]
 
@@ -65,11 +65,13 @@ layout_mode = 2
 
 [node name="run" type="Button" parent="box/buttons"]
 layout_mode = 2
-tooltip_text = "Evaluates the entire text like a single function, returning the last result."
+tooltip_text = "Evaluates the entire text like a single function. A result must be returned manually."
 text = "Run Script"
 
 [node name="run_selected" type="Button" parent="box/buttons"]
 layout_mode = 2
+tooltip_text = "Run the selected text. If it's more than one line, any result needs 'return' to be printed.
+If no text is selected, it runs the entire line at the caret position."
 text = "Run Selected"
 
 [node name="clear" type="Button" parent="box/buttons"]
