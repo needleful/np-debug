@@ -56,14 +56,15 @@ func files_by_extension(file_ext: String, root := "res://") -> Array:
 	dir.list_dir_begin()
 	var file_name = dir.get_next()
 	var result := []
+	var dirname := dir.get_current_dir()
 	while file_name:
 		if dir.current_is_dir():
 			result.append_array(files_by_extension(file_ext,
-				dir.get_current_dir() + '/'+file_name))
+				dirname.path_join(file_name)))
 		else:
 			if file_ext and file_name.get_extension() != file_ext:
 				file_name = dir.get_next()
 				continue
-			result.append(file_name)
+			result.append(dirname.path_join(file_name))
 		file_name = dir.get_next()
 	return result
