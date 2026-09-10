@@ -43,6 +43,7 @@ func reimport_all(ext: String):
 	var files := files_by_extension(ext)
 	filesystem().reimport_files(files)
 	return files
+
 # Based on code by hiulit
 # https://gist.github.com/hiulit/772b8784436898fd7f942750ad99e33e
 func files_by_extension(file_ext: String, root := "res://") -> Array:
