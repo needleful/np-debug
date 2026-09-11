@@ -130,7 +130,7 @@ func _print_dict(d:Dictionary, tree: Tree, t:TreeItem):
 	for k in d:
 		var v = d[k]
 		var sub := tree.create_item(t)
-		sub.set_text(0, k)
+		sub.set_text(0, str(k))
 		if v is Dictionary:
 			sub.set_text(1, '...')
 			_print_dict(v, tree, sub)
