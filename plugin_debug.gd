@@ -2,7 +2,7 @@
 class_name NPDebugPlugin
 extends EditorPlugin
 
-var ecscn = preload('res://addons/np-debug/editor_console.tscn')
+const ecscn := preload('res://addons/np-debug/editor_console.tscn')
 var editor_console: Control
 
 func _enter_tree():
