@@ -68,3 +68,25 @@ func files_by_extension(file_ext: String, root := "res://") -> Array:
 			result.append(dirname.path_join(file_name))
 		file_name = dir.get_next()
 	return result
+
+func selected() -> Node:
+	var s := selected_nodes()
+	if s.is_empty():
+		return null
+	else:
+		return s[0]
+
+func spin(node: Node3D, count: int, axis: Vector3):
+	if !node:
+		push_error("Can't spin nothing!")
+		return
+	var p := node.get_parent()
+	var angle_incr := 2*PI/(count + 1)
+	for i in count:
+		var node2 := node.duplicate()
+		var angle := angle_incr*(i+1)
+		node2.name = node.name + '_spin' + str(i)
+		p.add_child(node2)
+		node2.position = node.position.rotated(axis, angle)
+		node2.rotate(axis, angle)
+		node2.owner = p.owner
