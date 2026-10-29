@@ -14,6 +14,16 @@ func reparent() -> bool:
 		node.reparent(last)
 	return true
 
+func conjoin() -> bool:
+	var s := selected_nodes()
+	if s.is_empty():
+		return false
+	var last:Node = selected_nodes().pop_back().get_parent()
+	for node in s:
+		node.reparent(last)
+	return true
+	
+
 func node(path: String) -> Node:
 	return get_scene().get_node(path)
 
