@@ -88,6 +88,12 @@ func help():
 func scene():
 	return get_tree().current_scene
 
+func exists(n: String) -> bool:
+	return scene().has_node(n)
+
+func node(n: String) -> Node:
+	return scene().get_node(n)
+
 func set_time(p_time):
 	scene().set_time(p_time)
 
